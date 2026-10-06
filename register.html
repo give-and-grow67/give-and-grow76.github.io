@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ลงทะเบียน | Give & Grow</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                "Noto Sans Thai",
+                sans-serif;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(0, 100, 150, 0.15),
+                    rgba(0, 70, 120, 0.45)
+                ),
+
+                url("./background.jpg");
+
+            background-position:
+                center center;
+
+            background-repeat:
+                no-repeat;
+
+            background-size:
+                cover;
+
+            background-attachment:
+                fixed;
+
+            padding:
+                30px 15px;
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                flex-start;
+
+            overflow-y:
+                auto;
+        }
+
+
+        .box {
+
+            width:
+                500px;
+
+            max-width:
+                100%;
+
+            margin:
+                20px auto;
+
+            padding:
+                35px;
+
+            background:
+                rgba(255, 255, 255, 0.96);
+
+            border-radius:
+                25px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.3);
+        }
+
+
+        h1 {
+
+            text-align:
+                center;
+
+            color:
+                #0078aa;
+
+            margin-bottom:
+                25px;
+        }
+
+
+        .group {
+
+            margin-bottom:
+                15px;
+        }
+
+
+        label {
+
+            display:
+                block;
+
+            margin-bottom:
+                6px;
+
+            font-weight:
+                bold;
+
+            color:
+                #333;
+        }
+
+
+        input,
+        select {
+
+            width:
+                100%;
+
+            padding:
+                12px;
+
+            border:
+                2px solid #ddd;
+
+            border-radius:
+                10px;
+
+            font-size:
+                16px;
+
+            outline:
+                none;
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color:
+                #008fc4;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(0, 143, 196, 0.12);
+        }
+
+
+        button {
+
+            width:
+                100%;
+
+            padding:
+                14px;
+
+            margin-top:
+                5px;
+
+            border:
+                none;
+
+            border-radius:
+                10px;
+
+            background:
+                #008fc4;
+
+            color:
+                white;
+
+            font-size:
+                18px;
+
+            font-weight:
+                bold;
+
+            cursor:
+                pointer;
+        }
+
+
+        button:hover {
+
+            background:
+                #00729e;
+        }
+
+
+        button:disabled {
+
+            background:
+                #999;
+
+            cursor:
+                not-allowed;
+        }
+
+
+        .back {
+
+            display:
+                block;
+
+            text-align:
+                center;
+
+            margin-top:
+                15px;
+
+            color:
+                #0078aa;
+
+            text-decoration:
+                none;
+        }
+
+
+        .message {
+
+            display:
+                none;
+
+            margin-top:
+                15px;
+
+            padding:
+                12px;
+
+            border-radius:
+                10px;
+
+            text-align:
+                center;
+
+            font-weight:
+                bold;
+        }
+
+
+        .success {
+
+            display:
+                block;
+
+            background:
+                #dff5e5;
+
+            color:
+                #18743a;
+        }
+
+
+        .error {
+
+            display:
+                block;
+
+            background:
+                #ffe2e2;
+
+            color:
+                #b00020;
+        }
+
+
+        @media (max-width: 600px) {
+
+            body {
+                padding:
+                    15px 10px;
+            }
+
+            .box {
+                padding:
+                    25px 20px;
+
+                margin:
+                    10px auto;
+            }
+
+            h1 {
+                font-size:
+                    28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+
+    <h1>
+        ลงทะเบียน
+    </h1>
+
+
+    <form id="registerForm">
+
+
+        <!-- ชื่อ -->
+
+        <div class="group">
+
+            <label for="firstName">
+                ชื่อ
+            </label>
+
+            <input
+                id="firstName"
+                type="text"
+                placeholder="กรอกชื่อ"
+                required
+            >
+
+        </div>
+
+
+        <!-- นามสกุล -->
+
+        <div class="group">
+
+            <label for="lastName">
+                นามสกุล
+            </label>
+
+            <input
+                id="lastName"
+                type="text"
+                placeholder="กรอกนามสกุล"
+                required
+            >
+
+        </div>
+
+
+        <!-- ชื่อเล่น -->
+
+        <div class="group">
+
+            <label for="nickname">
+                ชื่อเล่น
+            </label>
+
+            <input
+                id="nickname"
+                type="text"
+                placeholder="กรอกชื่อเล่น"
+                required
+            >
+
+        </div>
+
+
+        <!-- สถานศึกษา -->
+
+        <div class="group">
+
+            <label for="school">
+                ชื่อสถานศึกษา
+            </label>
+
+            <input
+                id="school"
+                type="text"
+                placeholder="กรอกชื่อสถานศึกษา"
+                required
+            >
+
+        </div>
+
+
+        <!-- ระดับชั้น -->
+
+        <div class="group">
+
+            <label for="level">
+                ระดับชั้น
+            </label>
+
+            <select
+                id="level"
+                required
+            >
+
+                <option value="">
+                    -- เลือกระดับชั้น --
+                </option>
+
+                <option>ประถมศึกษาปีที่ 1</option>
+                <option>ประถมศึกษาปีที่ 2</option>
+                <option>ประถมศึกษาปีที่ 3</option>
+                <option>ประถมศึกษาปีที่ 4</option>
+                <option>ประถมศึกษาปีที่ 5</option>
+                <option>ประถมศึกษาปีที่ 6</option>
+
+                <option>มัธยมศึกษาปีที่ 1</option>
+                <option>มัธยมศึกษาปีที่ 2</option>
+                <option>มัธยมศึกษาปีที่ 3</option>
+
+                <option>มัธยมศึกษาปีที่ 4</option>
+                <option>มัธยมศึกษาปีที่ 5</option>
+                <option>มัธยมศึกษาปีที่ 6</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- อายุ -->
+
+        <div class="group">
+
+            <label for="age">
+                อายุ
+            </label>
+
+            <input
+                id="age"
+                type="number"
+                min="1"
+                max="100"
+                placeholder="กรอกอายุ"
+                required
+            >
+
+        </div>
+
+
+        <!-- อีเมล -->
+
+        <div class="group">
+
+            <label for="email">
+                อีเมล
+            </label>
+
+            <input
+                id="email"
+                type="email"
+                placeholder="example@email.com"
+                required
+            >
+
+        </div>
+
+
+        <!-- เบอร์โทรศัพท์ -->
+
+        <div class="group">
+
+            <label for="phone">
+                เบอร์โทรศัพท์
+            </label>
+
+            <input
+                id="phone"
+                type="text"
+                placeholder="กรอกเบอร์โทรศัพท์ หรือ -"
+                required
+            >
+
+        </div>
+
+
+        <!-- ปุ่มลงทะเบียน -->
+
+        <button
+            type="submit"
+            id="submitButton"
+        >
+            ลงทะเบียน
+        </button>
+
+
+        <!-- ข้อความแจ้งเตือน -->
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+    </form>
+
+
+    <a
+        href="index.html"
+        class="back"
+    >
+        ← กลับหน้าหลัก
+    </a>
+
+
+</div>
+
+
+
+<script>
+
+
+// ==========================================
+// URL Web App ระบบลงทะเบียน
+// ==========================================
+
+const SCRIPT_URL =
+    "https://script.google.com/macros/s/AKfycbyhsCJSGgvfyIM05HtWiPCGDnv7Lnm6l2M3U2vtpcV9czP5F5m2e5vkPSaci6w--jOr/exec";
+
+
+// ==========================================
+// ตัวแปร
+// ==========================================
+
+const form =
+    document.getElementById(
+        "registerForm"
+    );
+
+
+const button =
+    document.getElementById(
+        "submitButton"
+    );
+
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+// ==========================================
+// เมื่อกดลงทะเบียน
+// ==========================================
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        // --------------------------------------
+        // เตรียมข้อมูล
+        // --------------------------------------
+
+        const data = {
+
+            firstName:
+                document
+                .getElementById("firstName")
+                .value
+                .trim(),
+
+            lastName:
+                document
+                .getElementById("lastName")
+                .value
+                .trim(),
+
+            nickname:
+                document
+                .getElementById("nickname")
+                .value
+                .trim(),
+
+            school:
+                document
+                .getElementById("school")
+                .value
+                .trim(),
+
+            level:
+                document
+                .getElementById("level")
+                .value,
+
+            age:
+                document
+                .getElementById("age")
+                .value,
+
+            email:
+                document
+                .getElementById("email")
+                .value
+                .trim(),
+
+            phone:
+                document
+                .getElementById("phone")
+                .value
+                .trim()
+
+        };
+
+
+        // --------------------------------------
+        // เปลี่ยนปุ่ม
+        // --------------------------------------
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "กำลังบันทึก...";
+
+
+        showMessage(
+            "กำลังบันทึกข้อมูล...",
+            "success"
+        );
+
+
+        try {
+
+
+            // ----------------------------------
+            // ส่งข้อมูล
+            // ----------------------------------
+
+            const response =
+                await fetch(
+                    SCRIPT_URL,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
+
+                        },
+
+                        body:
+                            JSON.stringify(data)
+
+                    }
+                );
+
+
+            // ----------------------------------
+            // รับคำตอบ
+            // ----------------------------------
+
+            const result =
+                await response.json();
+
+
+            // ----------------------------------
+            // ตรวจสอบ
+            // ----------------------------------
+
+            if (
+                result.success
+            ) {
+
+                showMessage(
+                    "ลงทะเบียนสำเร็จแล้ว 🎉",
+                    "success"
+                );
+
+
+                form.reset();
+
+
+            } else {
+
+                showMessage(
+                    result.message ||
+                    "ไม่สามารถบันทึกข้อมูลได้",
+                    "error"
+                );
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+            showMessage(
+                "เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาตรวจสอบ Web App",
+                "error"
+            );
+
+        } finally {
+
+            button.disabled =
+                false;
+
+            button.textContent =
+                "ลงทะเบียน";
+
+        }
+
+    }
+);
+
+
+// ==========================================
+// แสดงข้อความ
+// ==========================================
+
+function showMessage(
+    text,
+    type
+) {
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message " + type;
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

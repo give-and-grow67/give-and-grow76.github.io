@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>เข้าสู่เกม - Give & Grow</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            min-height: 100vh;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+
+        /* ========================= */
+        /* พื้นหลังทั้งหน้า */
+        /* ========================= */
+
+        .page {
+
+            position: fixed;
+
+            top: 0;
+            left: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+
+            background-image:
+
+                linear-gradient(
+                    rgba(0, 120, 170, 0.15),
+                    rgba(0, 80, 130, 0.55)
+                ),
+
+                url("background.jpg");
+
+
+            background-position: center center;
+
+            background-repeat: no-repeat;
+
+            background-size: cover;
+
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+        }
+
+
+        /* ========================= */
+        /* กล่อง Login */
+        /* ========================= */
+
+        .login-box {
+
+            width: 420px;
+
+            max-width: 90%;
+
+            padding: 40px;
+
+
+            background:
+                rgba(255, 255, 255, 0.95);
+
+
+            border-radius: 25px;
+
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.3);
+
+
+            text-align: center;
+
+        }
+
+
+        /* ========================= */
+        /* หัวข้อ */
+        /* ========================= */
+
+        .login-box h1 {
+
+            margin-bottom: 30px;
+
+            color: #087aa8;
+
+            font-size: 32px;
+
+        }
+
+
+        /* ========================= */
+        /* ช่องกรอก */
+        /* ========================= */
+
+        .input-group {
+
+            text-align: left;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .input-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+            color: #333;
+
+        }
+
+
+        .input-group input {
+
+            width: 100%;
+
+            padding: 14px;
+
+
+            border:
+                2px solid #ddd;
+
+
+            border-radius: 10px;
+
+
+            font-size: 16px;
+
+            outline: none;
+
+
+            transition:
+                border-color 0.2s;
+
+        }
+
+
+        .input-group input:focus {
+
+            border-color: #087aa8;
+
+        }
+
+
+        /* ========================= */
+        /* ปุ่มเข้าเกม */
+        /* ========================= */
+
+        .login-button {
+
+            width: 100%;
+
+            padding: 14px;
+
+
+            border: none;
+
+            border-radius: 10px;
+
+
+            background: #087aa8;
+
+            color: white;
+
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+
+            cursor: pointer;
+
+
+            transition: 0.2s;
+
+        }
+
+
+        .login-button:hover {
+
+            background: #056488;
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .login-button:active {
+
+            transform:
+                scale(0.97);
+
+        }
+
+
+        /* ========================= */
+        /* ข้อความแจ้งเตือน */
+        /* ========================= */
+
+        #message {
+
+            margin-top: 15px;
+
+            color: red;
+
+            font-weight: bold;
+
+            min-height: 20px;
+
+        }
+
+
+        /* ========================= */
+        /* ปุ่มกลับ */
+        /* ========================= */
+
+        .back-button {
+
+            display: block;
+
+            margin-top: 20px;
+
+            color: #087aa8;
+
+            text-decoration: none;
+
+            font-size: 16px;
+
+        }
+
+
+        .back-button:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* ========================= */
+        /* โทรศัพท์ */
+        /* ========================= */
+
+        @media (max-width: 500px) {
+
+            .login-box {
+
+                padding: 30px 20px;
+
+            }
+
+
+            .login-box h1 {
+
+                font-size: 28px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================= -->
+    <!-- พื้นหลัง -->
+    <!-- ========================= -->
+
+    <div class="page">
+
+
+        <!-- ========================= -->
+        <!-- กล่องเข้าสู่เกม -->
+        <!-- ========================= -->
+
+        <div class="login-box">
+
+
+            <h1>
+                เข้าสู่เกม
+            </h1>
+
+
+            <form id="loginForm">
+
+
+                <!-- Username -->
+
+                <div class="input-group">
+
+                    <label for="username">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="กรอก Username"
+                        autocomplete="username"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="กรอก Password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ปุ่ม -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                >
+                    เข้าเกม
+                </button>
+
+
+                <p id="message"></p>
+
+
+            </form>
+
+
+            <!-- กลับหน้าหลัก -->
+
+            <a
+                href="index.html"
+                class="back-button"
+            >
+                ← กลับหน้าหลัก
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+
+        const message =
+            document.getElementById("message");
+
+
+        loginForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                const username =
+                    document
+                        .getElementById("username")
+                        .value
+                        .trim();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                if (
+                    username === "" ||
+                    password === ""
+                ) {
+
+                    message.textContent =
+                        "กรุณากรอก Username และ Password";
+
+                    return;
+                }
+
+
+                /*
+                 * ถ้ากรอกครบ
+                 * ให้ไปหน้าเกม
+                 */
+
+                window.location.href =
+                    "game.html";
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
