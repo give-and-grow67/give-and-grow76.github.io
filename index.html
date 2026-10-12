@@ -2,268 +2,627 @@
 <html lang="th">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Give & Grow</title>
+  <title>Give &amp; Grow</title>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <style>
+    /* =========================
+       พื้นฐาน
+       ========================= */
 
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            min-height: 100vh;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #000;
+    }
 
-        /* =========================
-           พื้นหลัง
-           ========================= */
+    /* =========================
+       วิดีโอพื้นหลัง
+       ========================= */
 
-        .page {
-            position: fixed;
-            top: 0;
-            left: 0;
+    #bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
 
-            width: 100vw;
-            height: 100vh;
+      filter: saturate(1.22) contrast(1.08) brightness(1.05);
 
-            background-image:
-                linear-gradient(
-                    rgba(0, 120, 170, 0.15),
-                    rgba(0, 80, 130, 0.55)
-                ),
-                url("background.jpg");
+      opacity: 1;
+      z-index: 0;
+      pointer-events: none;
 
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: cover;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      will-change: transform;
+    }
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    /* =========================
+       ชั้นทับวิดีโอ
+       ========================= */
 
-        /* =========================
-           กลุ่มปุ่ม
-           ========================= */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.03);
+      z-index: 1;
+      pointer-events: none;
+    }
 
-        .buttons {
-            width: 100%;
+    /* =========================
+       พื้นที่ปุ่ม
+       ========================= */
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+    .menu {
+      position: relative;
+      z-index: 2;
 
-            gap: 100px;
-            padding: 20px;
-        }
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
 
-        /* =========================
-           ปุ่มแต่ละอัน
-           ========================= */
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        .button {
-            width: 340px;
+      gap: clamp(15px, 3vw, 50px);
+      padding: 20px;
+    }
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+    /* =========================
+       ปุ่มแต่ละปุ่ม
+       ========================= */
 
-            background: transparent;
-            border: none;
-            outline: none;
-            box-shadow: none;
+    .menu-button {
+      display: block;
+      position: relative;
 
-            text-decoration: none;
-            cursor: pointer;
+      width: min(27vw, 360px);
+      max-width: 360px;
+      min-width: 0;
 
-            transition: transform 0.3s ease;
-        }
+      border: none;
+      outline: none;
+      background: transparent;
 
-        /* =========================
-           รูปปุ่ม
-           ========================= */
+      cursor: pointer;
+      text-decoration: none;
 
-        .icon-image {
-            width: 320px;
-            height: 320px;
+      transform-style: preserve-3d;
+      will-change: transform, filter;
 
-            object-fit: contain;
-            display: block;
+      transition:
+        transform 0.25s cubic-bezier(.2, .8, .2, 1),
+        filter 0.25s ease;
 
-            transition:
-                transform 0.3s ease,
-                filter 0.3s ease;
-        }
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        /* =========================
-           Hover
-           ========================= */
+    /* =========================
+       รูปบนปุ่ม
+       ========================= */
 
-        .button:hover {
-            transform: translateY(-10px);
-        }
+    .menu-button img {
+      display: block;
+      width: 100%;
+      height: auto;
 
-        .button:hover .icon-image {
-            transform: scale(1.08);
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
 
-            filter: drop-shadow(
-                0 12px 15px rgba(0, 0, 0, 0.35)
-            );
-        }
+      filter:
+        drop-shadow(0 8px 0 rgba(0, 0, 0, 0.18))
+        drop-shadow(0 14px 18px rgba(0, 0, 0, 0.22));
 
-        /* =========================
-           กดปุ่ม
-           ========================= */
+      transition: filter 0.25s ease;
+    }
 
-        .button:active {
-            transform: scale(0.94);
-        }
+    /* =========================
+       เอฟเฟกต์ตอนเอาเมาส์ชี้
+       ========================= */
 
-        /* =========================
-           หน้าจอขนาดกลาง
-           ========================= */
+    .menu-button:hover {
+      transform:
+        perspective(800px)
+        translateY(-14px)
+        translateZ(25px)
+        rotateX(5deg)
+        scale(1.06);
 
-        @media (max-width: 1200px) {
+      filter: brightness(1.08);
+    }
 
-            .buttons {
-                gap: 40px;
-            }
+    .menu-button:hover img {
+      filter:
+        drop-shadow(0 15px 0 rgba(0, 0, 0, 0.15))
+        drop-shadow(0 0 18px rgba(0, 240, 255, 0.85))
+        drop-shadow(0 25px 25px rgba(0, 0, 0, 0.3));
+    }
 
-            .button {
-                width: 280px;
-            }
+    /* =========================
+       เอฟเฟกต์ตอนกด
+       ========================= */
 
-            .icon-image {
-                width: 270px;
-                height: 270px;
-            }
-        }
+    .menu-button:active {
+      transform:
+        perspective(800px)
+        translateY(4px)
+        scale(0.94);
 
-        /* =========================
-           มือถือ / หน้าจอเล็ก
-           ========================= */
+      filter: brightness(0.95);
+      transition: transform 0.08s ease;
+    }
 
-        @media (max-width: 900px) {
+    /* =========================
+       เอฟเฟกต์เด้ง
+       ========================= */
 
-            body {
-                overflow-y: auto;
-            }
+    @keyframes popupBounce {
+      0% {
+        transform: translateY(0) scale(1);
+      }
 
-            .page {
-                position: relative;
+      35% {
+        transform: translateY(-17px) scale(1.07);
+      }
 
-                width: 100%;
-                min-height: 100vh;
-                height: auto;
+      60% {
+        transform: translateY(3px) scale(0.98);
+      }
 
-                padding: 40px 0;
-            }
+      80% {
+        transform: translateY(-5px) scale(1.02);
+      }
 
-            .buttons {
-                flex-direction: column;
-                gap: 35px;
-            }
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
 
-            .button {
-                width: auto;
-            }
+    .menu-button.bounce {
+      animation: popupBounce 0.48s ease;
+    }
 
-            .icon-image {
-                width: 280px;
-                height: 280px;
-            }
-        }
+    /* =========================
+       แสงสีบนวิดีโอ
+       ========================= */
 
-        /* =========================
-           มือถือขนาดเล็ก
-           ========================= */
+    .menu::before {
+      content: "";
+      position: absolute;
+      inset: 0;
 
-        @media (max-width: 500px) {
+      pointer-events: none;
 
-            .icon-image {
-                width: 240px;
-                height: 240px;
-            }
-        }
-    </style>
+      background:
+        radial-gradient(
+          circle at 50% 50%,
+          rgba(255, 255, 255, 0.04),
+          transparent 55%
+        );
+
+      z-index: -1;
+    }
+
+    /* =========================
+       หน้าจอขนาดเล็ก
+       ========================= */
+
+    @media (max-width: 900px) {
+      .menu {
+        gap: 16px;
+      }
+
+      .menu-button {
+        width: 30vw;
+      }
+    }
+
+    /* =========================
+       หน้าจอแคบ
+       ========================= */
+
+    @media (max-width: 600px) {
+      .menu {
+        flex-direction: column;
+        justify-content: center;
+        gap: 12px;
+        padding: 15px;
+      }
+
+      .menu-button {
+        width: min(65vw, 260px);
+      }
+
+      .menu-button:hover {
+        transform: translateY(-5px) scale(1.03);
+      }
+    }
+
+    /* =========================
+       แจ้งเตือนเมื่อหน้าจอแนวตั้ง
+       ========================= */
+
+    #rotate-notice {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+
+      padding: 24px;
+      text-align: center;
+      color: #fff;
+
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          #075985,
+          #071a2b 75%
+        );
+    }
+
+    #rotate-notice.show {
+      display: flex;
+    }
+
+    #rotate-notice .rotate-phone {
+      font-size: clamp(48px, 10vw, 65px);
+      animation: rotate-notice-icon 1.5s ease-in-out infinite;
+    }
+
+    #rotate-notice h2 {
+      font-size: clamp(20px, 4vw, 25px);
+      color: #00e5ff;
+    }
+
+    #rotate-notice p {
+      max-width: 500px;
+      font-size: clamp(14px, 3vw, 17px);
+      line-height: 1.6;
+    }
+
+    #rotate-notice span {
+      max-width: 500px;
+      font-size: clamp(12px, 2.5vw, 13px);
+      line-height: 1.7;
+      color: #b8eaff;
+    }
+
+    @keyframes rotate-notice-icon {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: rotate(-90deg);
+      }
+    }
+
+    /* =========================
+       ลดการเคลื่อนไหว
+       ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      .menu-button,
+      .menu-button img {
+        transition: none;
+      }
+
+      .menu-button.bounce {
+        animation: none;
+      }
+
+      #rotate-notice .rotate-phone {
+        animation: none;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-    <div class="page">
+  <!-- แจ้งเตือนให้หมุนจอ -->
 
-        <div class="buttons">
+  <div id="rotate-notice" role="status" aria-live="polite">
+    <div class="rotate-phone" aria-hidden="true">📱</div>
 
-            <!-- ==================== -->
-            <!-- เกม -->
-            <!-- ==================== -->
+    <h2>หมุนจอเป็นแนวนอน</h2>
 
-            <a
-                class="button"
-                href="waiting-game.html"
-            >
+    <p>
+      เพื่อประสบการณ์การใช้งาน
+      Give &amp; Grow ที่ดีที่สุด
+    </p>
 
-                <img
-                    src="game.png"
-                    class="icon-image"
-                    alt="เข้าเกม"
-                >
+    <span>
+      โปรดหมุนหน้าจอของคุณก่อนเริ่มใช้งาน
+    </span>
+  </div>
 
-            </a>
+  <!-- วิดีโอพื้นหลัง -->
 
+  <video
+    id="bg-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+  >
+    <source src="background_muted.mp4" type="video/mp4">
+    เบราว์เซอร์ของคุณไม่รองรับวิดีโอ
+  </video>
 
-            <!-- ==================== -->
-            <!-- ลงทะเบียน -->
-            <!-- ==================== -->
+  <!-- ชั้นโปร่งใส -->
 
-            <a
-                class="button"
-                href="register.html"
-            >
+  <div class="overlay"></div>
 
-                <img
-                    src="register.png"
-                    class="icon-image"
-                    alt="ลงทะเบียน"
-                >
+  <!-- ปุ่มเมนู -->
 
-            </a>
+  <main class="menu">
 
+    <!-- ปุ่มเข้าเกม -->
 
-            <!-- ==================== -->
-            <!-- แชร์ความดี -->
-            <!-- ==================== -->
+    <a
+      class="menu-button"
+      href="waiting-game.html"
+      aria-label="เล่นเกม"
+    >
+      <img src="game.png" alt="Game">
+    </a>
 
-            <a
-                class="button"
-                href="share.html"
-            >
+    <!-- ปุ่มลงทะเบียน -->
 
-                <img
-                    src="share.png"
-                    class="icon-image"
-                    alt="แชร์ความดี"
-                >
+    <a
+      class="menu-button"
+      href="register.html"
+      aria-label="ลงทะเบียน"
+    >
+      <img src="register.png" alt="Register">
+    </a>
 
-            </a>
+    <!-- ปุ่มแบ่งปัน -->
 
-        </div>
+    <a
+      class="menu-button"
+      href="share.html"
+      aria-label="แบ่งปัน"
+    >
+      <img src="share.png" alt="Share">
+    </a>
 
-    </div>
+  </main>
+
+  <script>
+    /* =========================
+       ตรวจจับแนวหน้าจอ
+       แสดงข้อความ 10 วินาที
+       ========================= */
+
+    const rotateNotice =
+      document.getElementById("rotate-notice");
+
+    let noticeTimer = null;
+
+    function checkScreenOrientation() {
+      const isPortrait =
+        window.matchMedia("(orientation: portrait)").matches;
+
+      if (isPortrait) {
+        // แสดงข้อความเตือน
+        rotateNotice.classList.add("show");
+
+        // เริ่มนับเวลาใหม่ 10 วินาที
+        clearTimeout(noticeTimer);
+
+        noticeTimer = setTimeout(() => {
+          rotateNotice.classList.remove("show");
+        }, 10000);
+
+      } else {
+        // แนวนอนให้ซ่อนทันที
+        rotateNotice.classList.remove("show");
+        clearTimeout(noticeTimer);
+      }
+    }
+
+    // ตรวจสอบทันทีเมื่อเปิดเว็บไซต์
+    checkScreenOrientation();
+
+    // ตรวจสอบเมื่อปรับขนาดหน้าต่าง
+    window.addEventListener(
+      "resize",
+      checkScreenOrientation
+    );
+
+    // ตรวจสอบเมื่อหมุนหน้าจอ
+    window.addEventListener(
+      "orientationchange",
+      checkScreenOrientation
+    );
+
+    if (window.matchMedia) {
+      const orientationQuery =
+        window.matchMedia("(orientation: portrait)");
+
+      if (orientationQuery.addEventListener) {
+        orientationQuery.addEventListener(
+          "change",
+          checkScreenOrientation
+        );
+      } else if (orientationQuery.addListener) {
+        orientationQuery.addListener(
+          checkScreenOrientation
+        );
+      }
+    }
+
+    /* =========================
+       ระบบเสียง
+       ========================= */
+
+    let audioContext = null;
+
+    function getAudioContext() {
+      if (!audioContext) {
+        const AudioContextClass =
+          window.AudioContext ||
+          window.webkitAudioContext;
+
+        if (!AudioContextClass) {
+          return null;
+        }
+
+        audioContext = new AudioContextClass();
+      }
+
+      if (audioContext.state === "suspended") {
+        audioContext.resume();
+      }
+
+      return audioContext;
+    }
+
+    function playSound(type = "hover") {
+      const ctx = getAudioContext();
+
+      if (!ctx) return;
+
+      const now = ctx.currentTime;
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      oscillator.connect(gain);
+      gain.connect(ctx.destination);
+
+      /* เสียงคลิก */
+
+      if (type === "click") {
+        oscillator.type = "sine";
+
+        oscillator.frequency.setValueAtTime(
+          650,
+          now
+        );
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+          280,
+          now + 0.09
+        );
+
+        gain.gain.setValueAtTime(0.0001, now);
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.22,
+          now + 0.01
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.0001,
+          now + 0.12
+        );
+
+        oscillator.start(now);
+        oscillator.stop(now + 0.13);
+      }
+
+      /* เสียง Hover */
+
+      else {
+        oscillator.type = "sine";
+
+        oscillator.frequency.setValueAtTime(
+          850,
+          now
+        );
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+          1100,
+          now + 0.045
+        );
+
+        gain.gain.setValueAtTime(0.0001, now);
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.09,
+          now + 0.008
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.0001,
+          now + 0.065
+        );
+
+        oscillator.start(now);
+        oscillator.stop(now + 0.07);
+      }
+    }
+
+    /* =========================
+       ปุ่มทั้งหมด
+       ========================= */
+
+    const buttons =
+      document.querySelectorAll(".menu-button");
+
+    buttons.forEach((button) => {
+
+      // เมื่อเอาเมาส์ชี้
+      button.addEventListener("mouseenter", () => {
+        playSound("hover");
+
+        button.classList.remove("bounce");
+
+        void button.offsetWidth;
+
+        button.classList.add("bounce");
+      });
+
+      // เมื่อกดปุ่ม
+      button.addEventListener("pointerdown", () => {
+        playSound("click");
+      });
+
+      // เมื่อจบ Animation
+      button.addEventListener("animationend", () => {
+        button.classList.remove("bounce");
+      });
+
+    });
+
+    /* =========================
+       เริ่มวิดีโอ
+       ========================= */
+
+    const video =
+      document.getElementById("bg-video");
+
+    video.play().catch(() => {
+      // บางเบราว์เซอร์อาจรอให้ผู้ใช้โต้ตอบก่อน
+    });
+  </script>
 
 </body>
-
 </html>
