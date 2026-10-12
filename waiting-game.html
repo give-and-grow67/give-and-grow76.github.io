@@ -2,6 +2,7 @@
 <html lang="th">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -10,6 +11,7 @@
     >
 
     <title>เข้าสู่เกม - Give & Grow</title>
+
 
     <style>
 
@@ -22,92 +24,211 @@
 
         html,
         body {
+
             width: 100%;
-            height: 100%;
-            min-height: 100vh;
+
+            min-height: 100%;
+
         }
 
 
         body {
-            font-family: Arial, sans-serif;
-            overflow: hidden;
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                "Noto Sans Thai",
+                sans-serif;
+
+            overflow-x: hidden;
+
+            position: relative;
+
+            background: #000;
         }
 
 
-        /* ========================= */
-        /* พื้นหลังทั้งหน้า */
-        /* ========================= */
+        /* =========================
+           วิดีโอพื้นหลัง
+           ========================= */
 
-        .page {
+        #bg-video {
 
             position: fixed;
 
-            top: 0;
-            left: 0;
+            inset: 0;
 
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            object-position:
+                center center;
+
+            filter:
+                saturate(1.22)
+                contrast(1.08)
+                brightness(1.05);
+
+            opacity: 1;
+
+            z-index: 0;
+
+            pointer-events: none;
+
+            transform:
+                translateZ(0);
+
+            backface-visibility:
+                hidden;
+        }
 
 
-            background-image:
+        /* =========================
+           แสงบาง ๆ
+           ========================= */
 
-                linear-gradient(
-                    rgba(0, 120, 170, 0.15),
-                    rgba(0, 80, 130, 0.55)
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 1;
+
+            pointer-events: none;
+
+            background:
+
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(
+                        0,
+                        255,
+                        255,
+                        0.08
+                    ),
+                    transparent 38%
                 ),
 
-                url("background.jpg");
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(
+                        0,
+                        150,
+                        255,
+                        0.10
+                    ),
+                    transparent 40%
+                );
+        }
 
 
-            background-position: center center;
+        /* =========================
+           พื้นที่หน้า
+           ========================= */
 
-            background-repeat: no-repeat;
+        .page {
 
-            background-size: cover;
+            position: relative;
 
+            z-index: 2;
+
+            width: 100%;
+
+            min-height: 100vh;
+
+            padding:
+                25px 15px;
 
             display: flex;
 
             justify-content: center;
 
             align-items: center;
-
         }
 
 
-        /* ========================= */
-        /* กล่อง Login */
-        /* ========================= */
+        /* =========================
+           กล่องเข้าสู่เกม
+           ========================= */
 
         .login-box {
 
             width: 420px;
 
-            max-width: 90%;
+            max-width: 100%;
 
             padding: 40px;
 
 
             background:
-                rgba(255, 255, 255, 0.95);
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.96
+                );
+
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.85
+                );
 
 
             border-radius: 25px;
 
 
             box-shadow:
+
                 0 15px 40px
-                rgba(0, 0, 0, 0.3);
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.25
+                ),
+
+                0 0 25px
+                rgba(
+                    0,
+                    220,
+                    255,
+                    0.12
+                );
 
 
             text-align: center;
 
+
+            opacity: 0;
+
+
+            animation:
+                contentEnter
+                0.75s
+                cubic-bezier(
+                    .2,
+                    .8,
+                    .2,
+                    1
+                )
+                forwards;
         }
 
 
-        /* ========================= */
-        /* หัวข้อ */
-        /* ========================= */
+        /* =========================
+           หัวข้อ
+           ========================= */
 
         .login-box h1 {
 
@@ -117,12 +238,18 @@
 
             font-size: 32px;
 
+            animation:
+                titleEnter
+                0.6s
+                ease-out
+                0.15s
+                both;
         }
 
 
-        /* ========================= */
-        /* ช่องกรอก */
-        /* ========================= */
+        /* =========================
+           ช่องกรอก
+           ========================= */
 
         .input-group {
 
@@ -130,6 +257,27 @@
 
             margin-bottom: 20px;
 
+            opacity: 0;
+
+            animation:
+                fieldEnter
+                0.45s
+                ease-out
+                both;
+        }
+
+
+        .input-group:nth-of-type(1) {
+
+            animation-delay:
+                0.2s;
+        }
+
+
+        .input-group:nth-of-type(2) {
+
+            animation-delay:
+                0.3s;
         }
 
 
@@ -142,7 +290,6 @@
             font-weight: bold;
 
             color: #333;
-
         }
 
 
@@ -152,35 +299,55 @@
 
             padding: 14px;
 
-
             border:
                 2px solid #ddd;
 
-
             border-radius: 10px;
-
 
             font-size: 16px;
 
             outline: none;
 
+            font-family: inherit;
 
             transition:
-                border-color 0.2s;
 
+                border-color
+                0.2s ease,
+
+                box-shadow
+                0.2s ease;
         }
 
 
         .input-group input:focus {
 
-            border-color: #087aa8;
+            border-color:
+                #087aa8;
 
+            box-shadow:
+
+                0 0 0 3px
+                rgba(
+                    8,
+                    122,
+                    168,
+                    0.12
+                ),
+
+                0 0 12px
+                rgba(
+                    0,
+                    200,
+                    255,
+                    0.10
+                );
         }
 
 
-        /* ========================= */
-        /* ปุ่มเข้าเกม */
-        /* ========================= */
+        /* =========================
+           ปุ่มเข้าเกม
+           ========================= */
 
         .login-button {
 
@@ -188,37 +355,79 @@
 
             padding: 14px;
 
-
             border: none;
 
             border-radius: 10px;
 
-
-            background: #087aa8;
+            background:
+                #087aa8;
 
             color: white;
-
 
             font-size: 18px;
 
             font-weight: bold;
 
+            font-family: inherit;
 
             cursor: pointer;
 
+            box-shadow:
+                0 5px 14px
+                rgba(
+                    8,
+                    122,
+                    168,
+                    0.20
+                );
 
-            transition: 0.2s;
+            transition:
 
+                background
+                0.2s ease,
+
+                transform
+                0.2s ease,
+
+                box-shadow
+                0.2s ease;
+
+            opacity: 0;
+
+            animation:
+                fieldEnter
+                0.45s
+                ease-out
+                0.4s
+                both;
         }
 
 
         .login-button:hover {
 
-            background: #056488;
+            background:
+                #056488;
 
             transform:
                 translateY(-2px);
 
+            box-shadow:
+
+                0 7px 18px
+                rgba(
+                    8,
+                    122,
+                    168,
+                    0.30
+                ),
+
+                0 0 15px
+                rgba(
+                    0,
+                    220,
+                    255,
+                    0.15
+                );
         }
 
 
@@ -226,30 +435,29 @@
 
             transform:
                 scale(0.97);
-
         }
 
 
-        /* ========================= */
-        /* ข้อความแจ้งเตือน */
-        /* ========================= */
+        /* =========================
+           ข้อความแจ้งเตือน
+           ========================= */
 
         #message {
 
             margin-top: 15px;
 
-            color: red;
+            color:
+                #c62828;
 
             font-weight: bold;
 
             min-height: 20px;
-
         }
 
 
-        /* ========================= */
-        /* ปุ่มกลับ */
-        /* ========================= */
+        /* =========================
+           กลับหน้าหลัก
+           ========================= */
 
         .back-button {
 
@@ -257,39 +465,128 @@
 
             margin-top: 20px;
 
-            color: #087aa8;
+            color:
+                #087aa8;
 
             text-decoration: none;
 
             font-size: 16px;
 
+            transition:
+                color
+                0.2s ease;
         }
 
 
         .back-button:hover {
 
-            text-decoration: underline;
+            color:
+                #00a4d6;
 
+            text-decoration:
+                underline;
         }
 
 
-        /* ========================= */
-        /* โทรศัพท์ */
-        /* ========================= */
+        /* =========================
+           Animation
+           ========================= */
+
+        @keyframes contentEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(35px)
+                    scale(0.96);
+
+                filter:
+                    blur(5px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+                filter:
+                    blur(0);
+            }
+        }
+
+
+        @keyframes titleEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(12px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        @keyframes fieldEnter {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(12px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        /* =========================
+           มือถือ
+           ========================= */
 
         @media (max-width: 500px) {
 
+            .page {
+
+                padding:
+                    20px 12px;
+            }
+
+
             .login-box {
 
-                padding: 30px 20px;
+                padding:
+                    30px 20px;
 
+                border-radius:
+                    20px;
             }
 
 
             .login-box h1 {
 
-                font-size: 28px;
-
+                font-size:
+                    28px;
             }
 
         }
@@ -302,16 +599,34 @@
 <body>
 
 
-    <!-- ========================= -->
-    <!-- พื้นหลัง -->
-    <!-- ========================= -->
+    <!-- =========================
+         วิดีโอพื้นหลัง
+         ========================= -->
 
-    <div class="page">
+    <video
+        id="bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+    >
+
+        <source
+            src="background_muted.mp4"
+            type="video/mp4"
+        >
+
+    </video>
 
 
-        <!-- ========================= -->
-        <!-- กล่องเข้าสู่เกม -->
-        <!-- ========================= -->
+    <!-- =========================
+         หน้า
+         ========================= -->
+
+    <main class="page">
+
 
         <div class="login-box">
 
@@ -362,7 +677,7 @@
                 </div>
 
 
-                <!-- ปุ่ม -->
+                <!-- เข้าเกม -->
 
                 <button
                     type="submit"
@@ -372,7 +687,11 @@
                 </button>
 
 
-                <p id="message"></p>
+                <p
+                    id="message"
+                    role="status"
+                    aria-live="polite"
+                ></p>
 
 
             </form>
@@ -390,18 +709,21 @@
 
         </div>
 
-
-    </div>
+    </main>
 
 
     <script>
 
         const loginForm =
-            document.getElementById("loginForm");
+            document.getElementById(
+                "loginForm"
+            );
 
 
         const message =
-            document.getElementById("message");
+            document.getElementById(
+                "message"
+            );
 
 
         loginForm.addEventListener(
@@ -413,14 +735,18 @@
 
                 const username =
                     document
-                        .getElementById("username")
+                        .getElementById(
+                            "username"
+                        )
                         .value
                         .trim();
 
 
                 const password =
                     document
-                        .getElementById("password")
+                        .getElementById(
+                            "password"
+                        )
                         .value;
 
 
@@ -437,9 +763,9 @@
 
 
                 /*
-                 * ถ้ากรอกครบ
-                 * ให้ไปหน้าเกม
-                 */
+                    เมื่อกรอกครบ
+                    ให้ไปหน้าเกม
+                */
 
                 window.location.href =
                     "game.html";
