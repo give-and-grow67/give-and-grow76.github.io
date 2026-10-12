@@ -417,47 +417,44 @@
 
   <script>
     /* =========================
-       ตรวจจับแนวหน้าจอ
-       แสดงข้อความ 10 วินาที
+       แจ้งเตือนแนวตั้งเพียงครั้งเดียว
        ========================= */
 
     const rotateNotice =
       document.getElementById("rotate-notice");
 
-    let noticeTimer = null;
+    // สถานะว่าข้อความเคยแสดงแล้วหรือยัง
+    let noticeShown = false;
 
     function checkScreenOrientation() {
       const isPortrait =
         window.matchMedia("(orientation: portrait)").matches;
 
+      // ถ้าเคยแสดงข้อความแล้ว ห้ามแสดงซ้ำ
+      if (noticeShown) return;
+
+      // ถ้าเป็นแนวตั้ง ให้แสดงข้อความครั้งแรก
       if (isPortrait) {
-        // แสดงข้อความเตือน
+        noticeShown = true;
         rotateNotice.classList.add("show");
 
-        // เริ่มนับเวลาใหม่ 10 วินาที
-        clearTimeout(noticeTimer);
-
-        noticeTimer = setTimeout(() => {
+        // ซ่อนข้อความหลัง 10 วินาที
+        setTimeout(() => {
           rotateNotice.classList.remove("show");
         }, 10000);
-
-      } else {
-        // แนวนอนให้ซ่อนทันที
-        rotateNotice.classList.remove("show");
-        clearTimeout(noticeTimer);
       }
     }
 
-    // ตรวจสอบทันทีเมื่อเปิดเว็บไซต์
+    // ตรวจสอบตอนเปิดเว็บไซต์
     checkScreenOrientation();
 
-    // ตรวจสอบเมื่อปรับขนาดหน้าต่าง
+    // ตรวจสอบเมื่อขนาดหน้าต่างเปลี่ยน
     window.addEventListener(
       "resize",
       checkScreenOrientation
     );
 
-    // ตรวจสอบเมื่อหมุนหน้าจอ
+    // ตรวจสอบเมื่อหมุนจอ
     window.addEventListener(
       "orientationchange",
       checkScreenOrientation
