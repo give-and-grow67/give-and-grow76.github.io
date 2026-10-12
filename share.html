@@ -2,173 +2,671 @@
 <html lang="th">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>แชร์ความดี | GiveandGrow</title>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>แชร์ความดี | Give & Grow</title>
 
     <style>
 
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            margin: 0;
-            font-family: "Segoe UI", Tahoma, sans-serif;
-            background: linear-gradient(135deg, #e8f8ff, #f7fff3);
-            min-height: 100vh;
-            padding: 30px 15px;
-            color: #333;
+        html {
+            min-height: 100%;
         }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Tahoma,
+                "Noto Sans Thai",
+                sans-serif;
+
+            color: #164653;
+
+            padding: 25px 16px 50px;
+
+            overflow-x: hidden;
+
+            position: relative;
+        }
+
+        /* =========================
+           วิดีโอพื้นหลัง
+           ========================= */
+
+        #bg-video {
+            position: fixed;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+            object-position: center center;
+
+            filter:
+                saturate(1.22)
+                contrast(1.08)
+                brightness(1.05);
+
+            z-index: -3;
+
+            pointer-events: none;
+
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* แสงบาง ๆ */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            z-index: -2;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(0, 255, 255, 0.08),
+                    transparent 38%
+                ),
+
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(0, 150, 255, 0.10),
+                    transparent 40%
+                );
+        }
+
+        /* =========================
+           พื้นที่เนื้อหา
+           ========================= */
 
         .container {
-            max-width: 700px;
-            margin: auto;
+
+            position: relative;
+
+            z-index: 1;
+
+            width: 100%;
+
+            max-width: 760px;
+
+            margin: 0 auto;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .header h1 {
-            margin: 0;
-            color: #1596a8;
-            font-size: 38px;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 17px;
-            margin-top: 8px;
-        }
+        /* =========================
+           กล่อง
+           ========================= */
 
         .card {
-            background: white;
-            border-radius: 22px;
-            padding: 30px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.10);
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding:
+                clamp(20px, 5vw, 38px);
+
+            background:
+                rgba(255, 255, 255, .93);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, .92);
+
+            border-radius: 28px;
+
+            box-shadow:
+                0 22px 60px
+                rgba(0, 50, 80, .25),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, .95);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            animation:
+                appear .8s ease both;
         }
 
+        .card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+
+            left: 8%;
+            right: 8%;
+
+            height: 4px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #5ce8f5,
+                    #26c9b1,
+                    #77aaff
+                );
+
+            border-radius:
+                0 0 10px 10px;
+        }
+
+        /* =========================
+           หัวข้อ
+           ========================= */
+
+        .card-heading {
+
+            margin-bottom: 28px;
+
+            text-align: center;
+        }
+
+        .card-heading .emoji {
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 62px;
+            height: 62px;
+
+            margin-bottom: 12px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d6fbff,
+                    #c7fff0
+                );
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 180, 190, .15);
+
+            font-size: 30px;
+        }
+
+        .card-heading h2 {
+
+            color: #126c80;
+
+            font-size: 25px;
+
+            font-weight: 800;
+        }
+
+        .card-heading p {
+
+            margin-top: 7px;
+
+            color: #63838a;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+        /* =========================
+           ฟอร์ม
+           ========================= */
+
         .form-group {
-            margin-bottom: 22px;
+
+            margin-bottom: 24px;
         }
 
         label {
+
             display: block;
-            font-weight: bold;
-            font-size: 17px;
-            margin-bottom: 8px;
-            color: #333;
+
+            margin-bottom: 9px;
+
+            color: #245b68;
+
+            font-weight: 750;
+
+            font-size: 16px;
+        }
+
+        .number {
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 27px;
+            height: 27px;
+
+            margin-right: 7px;
+
+            border-radius: 9px;
+
+            background: #d9f8fa;
+
+            color: #087f91;
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+        .required {
+            color: #ed6675;
         }
 
         input[type="text"],
         input[type="date"],
         textarea {
+
             width: 100%;
-            padding: 13px 15px;
-            border: 2px solid #dce8eb;
-            border-radius: 12px;
-            font-size: 16px;
+
+            padding: 14px 16px;
+
+            border:
+                1.5px solid
+                #d4e9ed;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255, 255, 255, .95);
+
+            color: #234e5a;
+
             font-family: inherit;
+
+            font-size: 16px;
+
             outline: none;
-            transition: 0.2s;
+
+            transition:
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #94aeb4;
         }
 
         input[type="text"]:focus,
         input[type="date"]:focus,
         textarea:focus {
-            border-color: #25aebd;
+
+            border-color: #22bdcc;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(34, 189, 204, .13),
+
+                0 5px 15px
+                rgba(0, 150, 180, .06);
         }
 
         textarea {
+
             resize: vertical;
-            min-height: 130px;
+
+            min-height: 140px;
+
+            line-height: 1.8;
         }
+
+        /* =========================
+           อัปโหลดรูป
+           ========================= */
 
         .file-box {
-            border: 2px dashed #b8dfe4;
-            border-radius: 15px;
-            padding: 25px;
+
+            padding: 24px 18px;
+
             text-align: center;
-            background: #f8fdfe;
+
+            border:
+                2px dashed
+                #9bd9e0;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(235, 253, 255, .95),
+                    rgba(242, 255, 249, .95)
+                );
         }
 
-        .file-box input {
-            margin-top: 10px;
-            font-size: 15px;
+        .upload-icon {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 72px;
+            height: 72px;
+
+            margin:
+                0 auto 12px;
+
+            border-radius: 23px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #c8f8ff,
+                    #c9fff0
+                );
+
+            font-size: 34px;
+        }
+
+        .upload-title {
+
+            color: #176e7f;
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+        .upload-hint {
+
+            margin-top: 6px;
+
+            color: #78969d;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        input[type="file"] {
+
+            display: block;
+
+            width: 100%;
+
+            margin-top: 18px;
+
+            color: #477780;
+
+            font-family: inherit;
+
+            font-size: 14px;
+        }
+
+        input[type="file"]::file-selector-button {
+
+            margin-right: 10px;
+
+            padding: 10px 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #d8f8fa;
+
+            color: #087f91;
+
+            font-weight: 750;
+
+            font-family: inherit;
+
+            cursor: pointer;
         }
 
         #preview {
+
             display: none;
-            max-width: 100%;
-            max-height: 300px;
+
+            width: 100%;
+
+            max-height: 380px;
+
             margin: 20px auto 0;
-            border-radius: 15px;
-            object-fit: cover;
+
+            object-fit: contain;
+
+            border-radius: 16px;
+
+            border:
+                3px solid #ffffff;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 70, 100, .15);
         }
+
+        .preview-label {
+
+            display: none;
+
+            margin-top: 16px;
+
+            color: #188a91;
+
+            font-size: 13px;
+
+            font-weight: 750;
+        }
+
+        /* =========================
+           ปุ่มแชร์
+           ========================= */
 
         .submit-btn {
+
+            position: relative;
+
+            overflow: hidden;
+
             width: 100%;
-            border: none;
-            border-radius: 14px;
-            padding: 15px;
-            font-size: 19px;
-            font-weight: bold;
-            color: white;
-            background: #20a6b5;
+
+            min-height: 56px;
+
+            padding: 15px 20px;
+
+            border: 0;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    #0baec1,
+                    #15c6b0
+                );
+
+            color: #ffffff;
+
+            font-family: inherit;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
             cursor: pointer;
-            transition: 0.2s;
+
+            box-shadow:
+                0 9px 22px
+                rgba(0, 160, 175, .23);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
         }
 
-        .submit-btn:hover {
-            background: #178b99;
-            transform: translateY(-1px);
+        .submit-btn:hover:not(:disabled) {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 13px 30px
+                rgba(0, 160, 175, .32),
+
+                0 0 18px
+                rgba(0, 230, 230, .17);
+        }
+
+        .submit-btn:active:not(:disabled) {
+            transform: scale(.97);
         }
 
         .submit-btn:disabled {
-            background: #9abfc4;
-            cursor: not-allowed;
-            transform: none;
+
+            background: #91bdc2;
+
+            cursor: wait;
         }
 
-        .back-btn {
-            display: block;
-            text-align: center;
-            margin-top: 18px;
-            color: #168d9d;
-            text-decoration: none;
-            font-size: 16px;
-        }
-
-        .back-btn:hover {
-            text-decoration: underline;
-        }
+        /* =========================
+           สถานะ
+           ========================= */
 
         #status {
+
             text-align: center;
-            font-weight: bold;
+
+            font-weight: 750;
+
+            line-height: 1.7;
+
             margin-top: 18px;
+
             min-height: 25px;
         }
 
-        .required {
-            color: red;
+        /* =========================
+           กลับหน้าหลัก
+           ========================= */
+
+        .back-btn {
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            width: fit-content;
+
+            margin:
+                24px auto 0;
+
+            padding:
+                10px 17px;
+
+            color: #147f91;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 750;
+
+            border-radius: 999px;
+
+            background:
+                rgba(220, 249, 250, .85);
+
+            transition:
+                transform .2s ease,
+                background .2s ease;
         }
+
+        .back-btn:hover {
+
+            transform: translateY(-2px);
+
+            background: #d2f7f8;
+        }
+
+        .footer-note {
+
+            margin-top: 22px;
+
+            text-align: center;
+
+            color: #ffffff;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+
+            text-shadow:
+                0 2px 7px
+                rgba(0, 45, 70, .65);
+        }
+
+        /* =========================
+           Animation
+           ========================= */
+
+        @keyframes appear {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+        }
+
+        /* =========================
+           มือถือ
+           ========================= */
 
         @media (max-width: 600px) {
 
             body {
-                padding: 20px 12px;
+                padding:
+                    20px 12px 35px;
             }
 
             .card {
-                padding: 22px;
+                border-radius: 23px;
             }
 
-            .header h1 {
-                font-size: 30px;
+            .card-heading h2 {
+                font-size: 22px;
             }
 
         }
@@ -177,36 +675,76 @@
 
 </head>
 
-
 <body>
 
-    <div class="container">
+    <!-- =========================
+         วิดีโอพื้นหลัง
+         ========================= -->
 
-        <div class="header">
+    <video
+        id="bg-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+    >
+        <source
+            src="background_muted.mp4"
+            type="video/mp4"
+        >
+    </video>
 
-            <h1>🌱 แชร์ความดี</h1>
 
-            <p>
-                แบ่งปันเรื่องราวดี ๆ ให้ทุกคนได้ร่วมสร้างสังคมที่ดี
-            </p>
+    <!-- =========================
+         เนื้อหา
+         ========================= -->
 
-        </div>
+    <main class="container">
 
+        <section class="card">
 
-        <div class="card">
+            <div class="card-heading">
+
+                <div
+                    class="emoji"
+                    aria-hidden="true"
+                >
+                    💚
+                </div>
+
+                <h2>
+                    บันทึกเรื่องราวความดี
+                </h2>
+
+                <p>
+                    บอกเล่ากิจกรรมของคุณ
+                    เพื่อส่งต่อพลังดี ๆ ให้กับทุกคน
+                </p>
+
+            </div>
+
 
             <form id="goodForm">
 
 
-                <!-- ========================= -->
-                <!-- 1. กิจกรรม -->
-                <!-- ========================= -->
+                <!-- กิจกรรม -->
 
                 <div class="form-group">
 
-                    <label>
-                        1. กิจกรรมที่ทำ
-                        <span class="required">*</span>
+                    <label for="activity">
+
+                        <span class="number">
+                            1
+                        </span>
+
+                        กิจกรรมที่ทำ
+
+                        <span class="required">
+                            *
+                        </span>
+
                     </label>
 
                     <input
@@ -219,15 +757,22 @@
                 </div>
 
 
-                <!-- ========================= -->
-                <!-- 2. วันที่ -->
-                <!-- ========================= -->
+                <!-- วันที่ -->
 
                 <div class="form-group">
 
-                    <label>
-                        2. วันเดือนปีที่ทำ
-                        <span class="required">*</span>
+                    <label for="activityDate">
+
+                        <span class="number">
+                            2
+                        </span>
+
+                        วันเดือนปีที่ทำ
+
+                        <span class="required">
+                            *
+                        </span>
+
                     </label>
 
                     <input
@@ -239,44 +784,69 @@
                 </div>
 
 
-                <!-- ========================= -->
-                <!-- 3. ความประทับใจ -->
-                <!-- ========================= -->
+                <!-- ความประทับใจ -->
 
                 <div class="form-group">
 
-                    <label>
-                        3. อธิบายความประทับใจ
-                        <span class="required">*</span>
+                    <label for="impression">
+
+                        <span class="number">
+                            3
+                        </span>
+
+                        ความประทับใจ
+
+                        <span class="required">
+                            *
+                        </span>
+
                     </label>
 
                     <textarea
                         id="impression"
                         rows="5"
-                        placeholder="เล่าความรู้สึกหรือความประทับใจจากการทำกิจกรรม..."
+                        placeholder="เล่าความรู้สึก สิ่งที่ได้เรียนรู้ หรือความประทับใจจากกิจกรรมนี้..."
                         required
                     ></textarea>
 
                 </div>
 
 
-                <!-- ========================= -->
-                <!-- 4. รูปภาพ -->
-                <!-- ========================= -->
+                <!-- รูป -->
 
                 <div class="form-group">
 
-                    <label>
-                        4. แนบไฟล์รูปภาพ
-                        <span class="required">*</span>
+                    <label for="image">
+
+                        <span class="number">
+                            4
+                        </span>
+
+                        แนบรูปภาพกิจกรรม
+
+                        <span class="required">
+                            *
+                        </span>
+
                     </label>
 
 
                     <div class="file-box">
 
-                        <div>
-                            📷 เลือกรูปภาพกิจกรรม
+                        <div
+                            class="upload-icon"
+                            aria-hidden="true"
+                        >
+                            📸
                         </div>
+
+                        <div class="upload-title">
+                            เพิ่มภาพความทรงจำดี ๆ
+                        </div>
+
+                        <p class="upload-hint">
+                            เลือกรูปภาพที่แสดงถึงกิจกรรมความดีของคุณ
+                        </p>
 
                         <input
                             type="file"
@@ -285,19 +855,22 @@
                             required
                         >
 
+                        <div
+                            id="previewLabel"
+                            class="preview-label"
+                        >
+                            ✨ ตัวอย่างรูปภาพที่เลือก
+                        </div>
+
                         <img
                             id="preview"
-                            alt="ตัวอย่างรูปภาพ"
+                            alt="ตัวอย่างรูปภาพกิจกรรม"
                         >
 
                     </div>
 
                 </div>
 
-
-                <!-- ========================= -->
-                <!-- ปุ่มส่ง -->
-                <!-- ========================= -->
 
                 <button
                     type="submit"
@@ -310,239 +883,344 @@
             </form>
 
 
-            <div id="status"></div>
+            <div
+                id="status"
+                role="status"
+                aria-live="polite"
+            ></div>
 
 
             <a
                 href="index.html"
                 class="back-btn"
             >
-                ← กลับหน้าหลัก
+                <span>←</span>
+                กลับหน้าหลัก
             </a>
 
-        </div>
+        </section>
 
-    </div>
+
+        <p class="footer-note">
+            ทุกความดีเล็ก ๆ
+            สามารถสร้างการเปลี่ยนแปลงที่ยิ่งใหญ่ได้ 💙
+        </p>
+
+    </main>
 
 
     <script>
 
-        // ==================================================
-        // Google Apps Script URL
-        // ==================================================
+        /* =========================
+           Google Apps Script
+           ========================= */
 
         const SCRIPT_URL =
             "https://script.google.com/macros/s/AKfycbxmQ1frzqnUpfCFnHVrOViH7Eiaxvv_j_kE0YU5nURh33gCi1lTXpwFYQ9HusEiKtZd/exec";
 
 
-        // ==================================================
-        // แสดงตัวอย่างรูป
-        // ==================================================
+        /* =========================
+           Preview รูป
+           ========================= */
 
-        document
-            .getElementById("image")
-            .addEventListener("change", function () {
+        const imageInput =
+            document.getElementById("image");
 
-                const file = this.files[0];
+        const preview =
+            document.getElementById("preview");
+
+        const previewLabel =
+            document.getElementById("previewLabel");
+
+        let previewUrl = null;
+
+
+        imageInput.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    this.files[0];
+
+
+                if (previewUrl) {
+
+                    URL.revokeObjectURL(
+                        previewUrl
+                    );
+
+                    previewUrl = null;
+                }
+
 
                 if (!file) {
+
+                    preview.style.display =
+                        "none";
+
+                    previewLabel.style.display =
+                        "none";
+
                     return;
                 }
 
-                const preview =
-                    document.getElementById("preview");
+
+                if (
+                    !file.type.startsWith(
+                        "image/"
+                    )
+                ) {
+
+                    alert(
+                        "กรุณาเลือกไฟล์รูปภาพ"
+                    );
+
+                    this.value = "";
+
+                    return;
+                }
+
+
+                previewUrl =
+                    URL.createObjectURL(file);
 
                 preview.src =
-                    URL.createObjectURL(file);
+                    previewUrl;
 
                 preview.style.display =
                     "block";
 
-            });
+                previewLabel.style.display =
+                    "block";
+
+            }
+        );
 
 
-        // ==================================================
-        // ส่งข้อมูล
-        // ==================================================
+        /* =========================
+           ส่งข้อมูล
+           ========================= */
 
         document
             .getElementById("goodForm")
-            .addEventListener("submit", function (event) {
+            .addEventListener(
+                "submit",
+                function (event) {
 
-                event.preventDefault();
-
-
-                const activity =
-                    document.getElementById("activity").value;
+                    event.preventDefault();
 
 
-                const activityDate =
-                    document.getElementById("activityDate").value;
+                    const activity =
+                        document
+                            .getElementById(
+                                "activity"
+                            )
+                            .value
+                            .trim();
 
 
-                const impression =
-                    document.getElementById("impression").value;
+                    const activityDate =
+                        document
+                            .getElementById(
+                                "activityDate"
+                            )
+                            .value;
 
 
-                const image =
-                    document.getElementById("image").files[0];
+                    const impression =
+                        document
+                            .getElementById(
+                                "impression"
+                            )
+                            .value
+                            .trim();
 
 
-                // ตรวจว่ามีรูปหรือไม่
+                    const image =
+                        document
+                            .getElementById(
+                                "image"
+                            )
+                            .files[0];
 
-                if (!image) {
 
-                    alert("กรุณาแนบรูปภาพ");
+                    if (
+                        !activity ||
+                        !activityDate ||
+                        !impression
+                    ) {
 
-                    return;
+                        alert(
+                            "กรุณากรอกข้อมูลให้ครบทุกช่อง"
+                        );
+
+                        return;
+                    }
+
+
+                    if (!image) {
+
+                        alert(
+                            "กรุณาแนบรูปภาพกิจกรรม"
+                        );
+
+                        return;
+                    }
+
+
+                    const status =
+                        document.getElementById(
+                            "status"
+                        );
+
+                    const submitBtn =
+                        document.getElementById(
+                            "submitBtn"
+                        );
+
+
+                    status.style.color =
+                        "#168d9d";
+
+                    status.innerText =
+                        "กำลังเตรียมข้อมูลและส่งข้อมูล...";
+
+
+                    submitBtn.disabled =
+                        true;
+
+                    submitBtn.innerText =
+                        "⏳ กำลังส่งข้อมูล...";
+
+
+                    const reader =
+                        new FileReader();
+
+
+                    reader.onload =
+                        async function () {
+
+                            try {
+
+                                const base64 =
+                                    String(
+                                        reader.result
+                                    ).split(",")[1];
+
+
+                                const data = {
+
+                                    activity:
+                                        activity,
+
+                                    date:
+                                        activityDate,
+
+                                    impression:
+                                        impression,
+
+                                    fileName:
+                                        image.name,
+
+                                    mimeType:
+                                        image.type,
+
+                                    image:
+                                        base64
+                                };
+
+
+                                await fetch(
+                                    SCRIPT_URL,
+                                    {
+                                        method:
+                                            "POST",
+
+                                        mode:
+                                            "no-cors",
+
+                                        body:
+                                            JSON.stringify(
+                                                data
+                                            )
+                                    }
+                                );
+
+
+                                status.style.color =
+                                    "#168d67";
+
+                                status.innerText =
+                                    "ส่งคำขอแล้ว ❤️ โปรดตรวจสอบในระบบว่าบันทึกข้อมูลเรียบร้อย";
+
+
+                                document
+                                    .getElementById(
+                                        "goodForm"
+                                    )
+                                    .reset();
+
+
+                                preview
+                                    .removeAttribute(
+                                        "src"
+                                    );
+
+                                preview.style.display =
+                                    "none";
+
+                                previewLabel.style.display =
+                                    "none";
+
+
+                            } catch (error) {
+
+                                console.error(
+                                    error
+                                );
+
+                                status.style.color =
+                                    "#d64545";
+
+                                status.innerText =
+                                    "ส่งข้อมูลไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ตและลองใหม่อีกครั้ง";
+
+                            } finally {
+
+                                submitBtn.disabled =
+                                    false;
+
+                                submitBtn.innerText =
+                                    "❤️ แชร์ความดี";
+                            }
+
+                        };
+
+
+                    reader.onerror =
+                        function () {
+
+                            status.style.color =
+                                "#d64545";
+
+                            status.innerText =
+                                "อ่านไฟล์รูปภาพไม่สำเร็จ กรุณาลองใหม่";
+
+
+                            submitBtn.disabled =
+                                false;
+
+                            submitBtn.innerText =
+                                "❤️ แชร์ความดี";
+                        };
+
+
+                    reader.readAsDataURL(
+                        image
+                    );
 
                 }
-
-
-                const status =
-                    document.getElementById("status");
-
-
-                const submitBtn =
-                    document.getElementById("submitBtn");
-
-
-                status.style.color =
-                    "#168d9d";
-
-                status.innerText =
-                    "กำลังส่งข้อมูล...";
-
-
-                submitBtn.disabled =
-                    true;
-
-                submitBtn.innerText =
-                    "กำลังส่งข้อมูล...";
-
-
-                // ==================================================
-                // อ่านไฟล์รูป
-                // ==================================================
-
-                const reader =
-                    new FileReader();
-
-
-                reader.onload =
-                    async function () {
-
-
-                        try {
-
-
-                            // เอาเฉพาะ Base64
-                            const base64 =
-                                reader.result
-                                    .split(",")[1];
-
-
-                            // ข้อมูลที่จะส่ง
-                            const data = {
-
-                                activity:
-                                    activity,
-
-                                date:
-                                    activityDate,
-
-                                impression:
-                                    impression,
-
-                                fileName:
-                                    image.name,
-
-                                mimeType:
-                                    image.type,
-
-                                image:
-                                    base64
-
-                            };
-
-
-                            // ==================================================
-                            // ส่งไป Google Apps Script
-                            // ==================================================
-
-                            await fetch(
-                                SCRIPT_URL,
-                                {
-                                    method: "POST",
-
-                                    mode: "no-cors",
-
-                                    body:
-                                        JSON.stringify(data)
-                                }
-                            );
-
-
-                            // ==================================================
-                            // สำเร็จ
-                            // ==================================================
-
-                            status.style.color =
-                                "#159b67";
-
-                            status.innerText =
-                                "ส่งข้อมูลเรียบร้อยแล้ว ❤️";
-
-
-                            // ล้างแบบฟอร์ม
-
-                            document
-                                .getElementById("goodForm")
-                                .reset();
-
-
-                            // ซ่อนรูปตัวอย่าง
-
-                            document
-                                .getElementById("preview")
-                                .style.display =
-                                "none";
-
-
-                        }
-
-                        catch (error) {
-
-
-                            console.error(error);
-
-
-                            status.style.color =
-                                "red";
-
-                            status.innerText =
-                                "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง";
-
-
-                        }
-
-
-                        // เปิดปุ่มกลับ
-
-                        submitBtn.disabled =
-                            false;
-
-                        submitBtn.innerText =
-                            "❤️ แชร์ความดี";
-
-
-                    };
-
-
-                // เริ่มอ่านรูป
-                reader.readAsDataURL(image);
-
-            });
+            );
 
     </script>
 
